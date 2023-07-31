@@ -26,8 +26,8 @@ jobs:
           echo "First Tag: $first_tag"
           second_tag=${tags_array[1]}
           echo "Second Tag: $second_tag"
-          third_tag=${tags_array[2]}
-          echo "Third Tag: $third_tag"
+          sixt_tag=${tags_array[6]}
+          echo "Third Tag: $sixt_tag"
           
           last_two_tags=($(echo "$tags" | head -n 2))
           echo "PENULTIMATE_TAG=$last_two_tags[1]" >> $GITHUB_ENV
