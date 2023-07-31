@@ -19,14 +19,11 @@ jobs:
         run: |
           git fetch --tags
           tags=$(git tag --sort=-creatordate)  
-          tags_array=($tags)
-          last_tag=${tags_array[0]}
-          penultimate_tag=${tags_array[1]}                
-          echo "LAST_TAGS=$last_tag" >> $GITHUB_ENV
-          echo "PENULTIMATE_TAG=$penultimate_tag" >> $GITHUB_ENV
-
-          echo "PENULTIMATE_TAG=$PENULTIMATE_TAG"
-          echo "LAST_TAG=$LAST_TAG"
+          tags_array=($tags)  
+          last_tag_hash=$(git rev-parse ${tags_array[0]})
+          penultimate_tag_hash=$(git rev-parse ${tags_array[1]})
+          echo "LAST_TAGS=$last_tag_hash" >> $GITHUB_ENV
+          echo "PENULTIMATE_TAG=$penultimate_tag_hash" >> $GITHUB_ENV
   
       - name: Generate Changelog
         id: generate_changelog
@@ -42,7 +39,7 @@ jobs:
           if [ "$penultimate_tag" == "" ]; then
           conventional-changelog -p angular -o CHANGELOG.md -r
           else
-            conventional-changelog -p angular -o CHANGELOG.md -r --from $penultimate_tag --to $last_tag
+            conventional-changelog -p angular -o CHANGELOG.md -r $penultimate_tag..$last_tag
           fi
 
       - name: Upload artifact
