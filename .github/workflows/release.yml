@@ -20,7 +20,8 @@ jobs:
           git fetch --tags
           tags=$(git tag --sort=-creatordate)
           last_two_tags=($(echo "$tags" | head -n 2))
-          echo "LAST_TWO_TAGS=$last_two_tags" >> $GITHUB_ENV
+          echo "PENULTIMATE_TAG=$last_two_tags[1]" >> $GITHUB_ENV
+          echo "LAST_TAGS=$last_two_tags[0]" >> $GITHUB_ENV
   
       - name: Generate Changelog
         id: generate_changelog
@@ -30,8 +31,8 @@ jobs:
           # Install conventional-changelog-cli
           npm install -g conventional-changelog-cli
           
-          penultimate_tag=${env.LAST_TWO_TAGS[1]}
-          last_tag=${env.LAST_TWO_TAGS[0]}
+          penultimate_tag=${{ env.PENULTIMATE_TAG }}
+          last_tag=${{ env.LAST_TAG }}
           
           if [ "$penultimate_tag" == "" ]; then
           # changelog=$(conventional-changelog -p angular -r 0...$last_tag)
