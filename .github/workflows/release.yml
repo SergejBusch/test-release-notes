@@ -40,9 +40,9 @@ jobs:
           last_tag=${{ env.LAST_TAG }}
           
           if [ "$penultimate_tag" == "" ]; then
-          conventional-changelog -p angular -o CHANGELOG.md -r 0...$last_tag
+          conventional-changelog -p angular -o CHANGELOG.md -r
           else
-            conventional-changelog -p angular -o CHANGELOG.md -r $penultimate_tag..$last_tag
+            conventional-changelog -p angular -o CHANGELOG.md -r --from $penultimate_tag --to $last_tag
           fi
 
       - name: Upload artifact
