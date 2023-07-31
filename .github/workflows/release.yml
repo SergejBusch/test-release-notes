@@ -24,6 +24,17 @@ jobs:
           penultimate_tag_hash=$(git rev-parse ${tags_array[1]})
           echo "LAST_TAG=$last_tag_hash" >> $GITHUB_ENV
           echo "PENULTIMATE_TAG=$penultimate_tag_hash" >> $GITHUB_ENV
+          
+      - name: Print Result of -z "$penultimate_tag"
+        run: |
+          if [ -z "${{ env.PENULTIMATE_TAG }}" ]; then
+            echo "Result of -z: PENULTIMATE_TAG is empty"
+          else
+            echo "Result of -z: PENULTIMATE_TAG is not empty"
+          fi
+
+      - name: Print Git Log
+        run: git log --pretty=format:"%H %s" ${{ env.PENULTIMATE_TAG }}..${{ env.LAST_TAG }}
   
       - name: Generate Changelog
         id: generate_changelog
