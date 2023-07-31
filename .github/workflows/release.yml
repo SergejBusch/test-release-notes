@@ -36,8 +36,8 @@ jobs:
           penultimate_tag=${{ env.PENULTIMATE_TAG }}
           last_tag=${{ env.LAST_TAG }}
           
-          if [ "$penultimate_tag" == "" ]; then
-          conventional-changelog -p angular -o CHANGELOG.md -r
+          if [ -z "$penultimate_tag" ]; then
+            conventional-changelog -p angular -o CHANGELOG.md -r $last_tag
           else
             conventional-changelog -p angular -o CHANGELOG.md -r $penultimate_tag..$last_tag
           fi
