@@ -22,11 +22,13 @@ jobs:
           last_two_tags=($(echo "$tags" | head -n 2))
           echo "PENULTIMATE_TAG=$last_two_tags[1]" >> $GITHUB_ENV
           echo "LAST_TAGS=$last_two_tags[0]" >> $GITHUB_ENV
-          
-      - name: Print environment variable assignments
-        run: |
+          IFS=$'\n' read -ra tags_array <<< "$tags"
+          for tag in "${tags_array[@]}"; do
+            echo "Tag: $tag"
+          done
           echo "PENULTIMATE_TAG=$PENULTIMATE_TAG"
           echo "LAST_TAG=$LAST_TAG"
+          
   
       - name: Generate Changelog
         id: generate_changelog
