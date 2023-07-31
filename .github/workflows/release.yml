@@ -2,7 +2,7 @@ name: Update Tag Description
 on:
   push:
     tags:
-      - 'v*'  
+      - 'v*'
 
 jobs:
   get_commits:
@@ -15,13 +15,13 @@ jobs:
           fetch-depth: 0 # Get all commits
 
       - name: Get the last two tags
-      id: last_two_tags
-      run: |
-        git fetch --tags
-        tags=$(git tag --sort=-creatordate)
-        last_two_tags=($(echo "$tags" | head -n 2))
-        echo "LAST_TWO_TAGS=$last_two_tags" >> $GITHUB_ENV
-
+        id: last_two_tags
+        run: |
+          git fetch --tags
+          tags=$(git tag --sort=-creatordate)
+          last_two_tags=($(echo "$tags" | head -n 2))
+          echo "LAST_TWO_TAGS=$last_two_tags" >> $GITHUB_ENV
+  
       - name: Generate Changelog
         id: generate_changelog
         env:
@@ -29,7 +29,7 @@ jobs:
         run: |
           # Install conventional-changelog-cli
           npm install -g conventional-changelog-cli
-
+          
           penultimate_tag=${env.LAST_TWO_TAGS[1]}
           last_tag=${env.LAST_TWO_TAGS[0]}
           
@@ -40,7 +40,7 @@ jobs:
             conventional-changelog -p angular CHANGELOG.md -r $penultimate_tag..$last_tag
             # changelog=$(conventional-changelog -p angular -r $penultimate_tag..$last_tag)
           fi
-         
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
