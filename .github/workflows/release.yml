@@ -18,27 +18,15 @@ jobs:
         id: last_two_tags
         run: |
           git fetch --tags
-          git tag --sort=-creatordate
-          tags=$(git tag --sort=-creatordate)
-          
+          tags=$(git tag --sort=-creatordate)  
           tags_array=($tags)
-          first_tag=${tags_array[0]}
-          echo "First Tag: $first_tag"
-          second_tag=${tags_array[1]}
-          echo "Second Tag: $second_tag"
-          sixt_tag=${tags_array[6]}
-          echo "Third Tag: $sixt_tag"
-          
-          last_two_tags=($(echo "$tags" | head -n 2))
-          echo "PENULTIMATE_TAG=$last_two_tags[1]" >> $GITHUB_ENV
-          echo "LAST_TAGS=$last_two_tags[0]" >> $GITHUB_ENV
-          IFS=$'\n' read -ra tags_array <<< "$tags"
-          for tag in "${tags_array[@]}"; do
-            echo "Tag: $tag"
-          done
+          last_tag=${tags_array[0]}
+          penultimate_tag=${tags_array[1]}                
+          echo "LAST_TAGS=$last_tag" >> $GITHUB_ENV
+          echo "PENULTIMATE_TAG=$penultimate_tag" >> $GITHUB_ENV
+
           echo "PENULTIMATE_TAG=$PENULTIMATE_TAG"
           echo "LAST_TAG=$LAST_TAG"
-          
   
       - name: Generate Changelog
         id: generate_changelog
