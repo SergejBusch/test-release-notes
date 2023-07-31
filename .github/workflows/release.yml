@@ -22,7 +22,7 @@ jobs:
           tags_array=($tags)  
           last_tag_hash=$(git rev-parse ${tags_array[0]})
           penultimate_tag_hash=$(git rev-parse ${tags_array[1]})
-          echo "LAST_TAGS=$last_tag_hash" >> $GITHUB_ENV
+          echo "LAST_TAG=$last_tag_hash" >> $GITHUB_ENV
           echo "PENULTIMATE_TAG=$penultimate_tag_hash" >> $GITHUB_ENV
   
       - name: Generate Changelog
