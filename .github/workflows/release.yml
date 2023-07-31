@@ -38,7 +38,7 @@ jobs:
           # changelog=$(conventional-changelog -p angular -r 0...$last_tag)
           conventional-changelog -p angular -o CHANGELOG.md -r 0...$last_tag
           else
-            conventional-changelog -p angular -p CHANGELOG.md -r $penultimate_tag..$last_tag
+            conventional-changelog -p angular -o CHANGELOG.md -r $penultimate_tag..$last_tag
             # changelog=$(conventional-changelog -p angular -r $penultimate_tag..$last_tag)
           fi
 
