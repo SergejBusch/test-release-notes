@@ -36,9 +36,9 @@ jobs:
           
           if [ "$penultimate_tag" == "" ]; then
           # changelog=$(conventional-changelog -p angular -r 0...$last_tag)
-          conventional-changelog -p angular CHANGELOG.md -r 0...$last_tag
+          conventional-changelog -o CHANGELOG.md -r 0...$last_tag
           else
-            conventional-changelog -p angular CHANGELOG.md -r $penultimate_tag..$last_tag
+            conventional-changelog -o CHANGELOG.md -r $penultimate_tag..$last_tag
             # changelog=$(conventional-changelog -p angular -r $penultimate_tag..$last_tag)
           fi
 
@@ -46,4 +46,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: changelog
-          path: '**/CHANGELOG.md'
+          path: './CHANGELOG.md'
+          
+      # Add the new step to list repository contents
+      - name: List repository contents
+        run: ls -R
