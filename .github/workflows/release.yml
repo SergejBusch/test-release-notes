@@ -47,7 +47,7 @@ jobs:
           penultimate_tag=${{ env.PENULTIMATE_TAG }}
           last_tag=${{ env.LAST_TAG }}
           
-          conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+          conventional-changelog -p angular -i CHANGELOG.md -s
           
 
       - name: Upload artifact
