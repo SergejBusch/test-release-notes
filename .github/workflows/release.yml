@@ -13,28 +13,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Get all commits
-
-      - name: Get the last two tags
-        id: last_two_tags
-        run: |
-          git fetch --tags
-          tags=$(git tag --sort=-creatordate)  
-          tags_array=($tags)  
-          last_tag_hash=$(git rev-parse ${tags_array[0]})
-          penultimate_tag_hash=$(git rev-parse ${tags_array[1]})
-          echo "LAST_TAG=$last_tag_hash" >> $GITHUB_ENV
-          echo "PENULTIMATE_TAG=$penultimate_tag_hash" >> $GITHUB_ENV
-          
-      - name: Print Result of -z "$penultimate_tag"
-        run: |
-          if [ -z "${{ env.PENULTIMATE_TAG }}" ]; then
-            echo "Result of -z: PENULTIMATE_TAG is empty"
-          else
-            echo "Result of -z: PENULTIMATE_TAG is not empty"
-          fi
-
-      - name: Print Git Log
-        run: git log --pretty=format:"%H %s" ${{ env.PENULTIMATE_TAG }}..${{ env.LAST_TAG }}
   
       - name: Generate Changelog
         id: generate_changelog
@@ -43,12 +21,7 @@ jobs:
         run: |
           # Install conventional-changelog-cli
           npm install -g conventional-changelog-cli
-          
-          penultimate_tag=${{ env.PENULTIMATE_TAG }}
-          last_tag=${{ env.LAST_TAG }}
-          
-          conventional-changelog -p angular -i CHANGELOG.md -s
-          
+          conventional-changelog -p angular -i CHANGELOG.md -r 1
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
