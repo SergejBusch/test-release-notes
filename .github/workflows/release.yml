@@ -21,7 +21,7 @@ jobs:
         run: |
           # Install conventional-changelog-cli
           npm install -g conventional-changelog-cli
-          conventional-changelog -p angular -i CHANGELOG.md -s -r 3
+          conventional-changelog -p angular -i CHANGELOG.md -s -r 1
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
